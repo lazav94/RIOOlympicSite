@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+
+    </h:head>
+    <h:body>
+        <center>
+            <ui:composition template="template.xhtml">
+                <ui:define name="header">
+                    <h1> Hello #{userController.user.firstName} #{userController.user.lastName} </h1>
+
+                </ui:define>
+                <ui:define name="content">
+
+                    <h:form >
+                        <p:stack expanded="true" icon="Images/MenuImages/menu.png"    >
+                            
+                            <p:menuitem value="NewSport" style="width: 25px; height: 25px" icon="Images/MenuImages/sportsman.png" outcome="o_addsport.xhtml"/>
+                            <p:menuitem value="NewDiscipline" style="width: 25px; height: 25px" icon="Images/MenuImages/di.png" outcome="o_adddiscipline.xhtml"/>
+                            <p:menuitem value="NewTournament" style="width: 25px; height: 25px" icon="Images/MenuImages/troph.png" outcome="o_addtournament.xhtml"/>
+                            <p:menuitem value="Records" style="width: 25px; height: 25px" icon="Images/MenuImages/stopwatch.png" outcome="o_records.xhtml"/>
+
+                            <p:menuitem value="LogOut" style="width: 25px; height: 25px" action="#{userController.logout()}" icon="Images/MenuImages/logout.png"  outcome="login.xhtml"/>
+                            <p:menuitem value="Back" style="width: 25px; height: 25px" icon="Images/MenuImages/back.png" outcome="organizer.xhtml"/>
+                        </p:stack>
+                    </h:form>
+
+                    <h:form class="form" id="f" rendered="#{not empty userController.userRequests}">
+
+                        <h2>Waiting users</h2>
+
+                        <p:dataTable id="dt" style="width:800px;" var="u" value="#{userController.userRequests}" resizableColumns="true" rows="10" 
+                                     paginator="true"  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15,20,25,30,50,100" >
+                            <f:facet name="header">
+                                <h:outputText value="All user requests" />
+                            </f:facet>
+
+                            <p:column  headerText="Name"  sortBy="#{u.user.firstName}"  >
+                                <h:outputText value="#{u.user.firstName} #{u.user.lastName}" />
+                            </p:column>
+
+                            <p:column  headerText="Email"  sortBy="#{u.user.email}" style="width: 80px">
+                                <h:outputText value="#{u.user.email}" />
+                            </p:column>
+
+                            <p:column  headerText="Nation"  sortBy="#{u.user.nation.name}" style="width: 100px">
+                                <h:outputText value="#{u.user.nation.name}" />
+                            </p:column>
+
+                            <p:column  headerText="Type"  sortBy="#{u.user.type}" style="width: 90px">
+                                <h:outputText value="#{u.user.type == 1 ? 'Delegate' :'Nacional Leader'}" />
+                            </p:column>
+
+                            <p:column  headerText="Confirm"  sortBy="#{u.user.type}" style="width:140px">
+                                <p:commandButton value="Approve" action="#{userController.approve(u)}"  update=":f"/>
+                                <p:commandButton value="Reject" action="#{userController.reject(u)}"  update=":f"/> 
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:form>
+
+                </ui:define>
+            </ui:composition> 
+        </center>
+    </h:body>
+</html>
+

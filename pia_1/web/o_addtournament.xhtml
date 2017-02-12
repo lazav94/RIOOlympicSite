@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+
+    </h:head>
+    <h:body>
+        <center>
+            <ui:composition template="template.xhtml">
+                <ui:define name="header">
+                    <h1> Hello #{userController.user.firstName} #{userController.user.lastName} </h1>
+
+                </ui:define>
+                <ui:define name="content">
+
+                    <h:form >
+                        <p:stack expanded="true" icon="Images/MenuImages/menu.png"    >
+                            <p:menuitem value="UserRequest" style="width: 25px; height: 25px" icon="Images/MenuImages/user.jpg" outcome="o_userrequest.xhtml"/>
+                            <p:menuitem value="NewSport" style="width: 25px; height: 25px" icon="Images/MenuImages/sportsman.png" outcome="o_addsport.xhtml"/>
+                            <p:menuitem value="NewDiscipline" style="width: 25px; height: 25px" icon="Images/MenuImages/di.png" outcome="o_adddiscipline.xhtml"/>
+                          
+                            <p:menuitem value="Records" style="width: 25px; height: 25px" icon="Images/MenuImages/stopwatch.png" outcome="o_records.xhtml"/>
+
+                            <p:menuitem value="LogOut" style="width: 25px; height: 25px" action="#{userController.logout()}" icon="Images/MenuImages/logout.png"  outcome="login.xhtml"/>
+                           <p:menuitem value="Back" style="width: 25px; height: 25px" icon="Images/MenuImages/back.png" outcome="organizer.xhtml"/>
+                        </p:stack>
+                    </h:form>
+
+                    <h:form class="form" id="form3">
+                        <h2>Add new Tournament to Olympic</h2>
+                        <p:growl   id="growl3" showDetail="true" life="5000" autoUpdate="true"/> 
+                        <p:wizard backLabel="back" >
+                            <center>
+                                <p:tab title="Sport">
+                                    <p:panel header="Select sport" style="width:350px;">
+                                        <p:selectOneMenu id="sp" value="#{controller.selectedSport}" style="width:200px" required="true" requiredMessage="You must choose sport">
+                                            <f:selectItem itemLabel="Select One" itemValue="" />
+                                            <f:selectItems value="#{controller.sports}"  var="s" itemLabel="#{s.name}"  itemValue="#{s.name}" />
+                                            <p:ajax  event="change" update="disc" listener="#{controller.selectSportTournament()}" />
+                                        </p:selectOneMenu>
+                                        <br/>
+                                        <p:selectOneRadio  value="#{controller.sex}" required="true" requiredMessage="Choose sex">
+                                            <f:selectItem itemLabel="Man" itemValue="man" />
+                                            <f:selectItem itemLabel="Woman" itemValue="woman" />
+                                        </p:selectOneRadio>
+                                    </p:panel>
+                                </p:tab>
+
+                                <p:tab title="Discipline"  >
+                                    <p:panel header="Select discipline" style="width:350px;">
+                                        <p:selectOneMenu  id="disc" value="#{controller.selectedDiscipline}" style="width:125px" rendered="#{not empty controller.disciplins}" required="true" requiredMessage="You must choose discipline" >
+                                            <f:selectItem itemLabel="Select One" itemValue="" />
+                                            <f:selectItems value="#{controller.disciplins}"  var="disciplin" itemLabel="#{disciplin.name}" itemValue="#{disciplin.name}"  />
+                                            <p:ajax  event="change" update="disc" listener="#{controller.selectTeamsTournament()}" />
+                                        </p:selectOneMenu>
+                                    </p:panel>
+                                </p:tab>
+
+                                <p:tab  title="Date and Location"  >
+                                    <p:panel header="Chose date and location" style="width:350px;">
+                                        <p:panelGrid  columns="1">
+                                            <p:calendar   value="#{controller.beginDate}" navigator="true"  pattern="dd.MM.yyyy"  effect="fold" placeholder="Begin date" size="16"   required="true" requiredMessage="Begin Date  must be filled" /> 
+                                            <p:calendar   value="#{controller.endDate}" navigator="true"  pattern="dd.MM.yyyy"  effect="fold" placeholder="End date" size="16"   required="true" requiredMessage="End Date must be filled" /> 
+                                            <p:inputText value="#{controller.location}"  size="16" required="true" requiredMessage="Location is empty"/>
+
+                                        </p:panelGrid>
+                                    </p:panel>
+
+                                </p:tab>
+
+                                <p:tab  title="Team" >
+                                    <p:panel header="Chose team" >
+
+                                        <p:dataTable  var="team" value="#{controller.teamsTournament}"  rows="10"
+                                                      paginator="true"  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                      rowsPerPageTemplate="5,10,15,20,25,30,50,100" >
+
+                                            <p:column headerText="Id"  style="width:10px;"  >
+                                                <h:outputText value="#{team.id}"  />
+                                            </p:column>
+
+                                            <p:column headerText="Sport"  style="width:75px;" >
+                                                <h:outputText value="#{team.sport.name}" />
+                                            </p:column>
+
+                                            <p:column headerText="Discipline"   style="width:75px;" >
+                                                <h:outputText value="#{team.discipline.name}" />
+                                            </p:column>
+                                            <p:column headerText="Sex"   style="width:30px;" >
+                                                <h:outputText value="#{team.sex}" />
+                                            </p:column>
+
+                                            <p:column headerText="Sportsman"  >
+                                                <h:outputText value="#{team.sportsmen}"   />
+                                            </p:column>
+
+                                            <p:column headerText="Confirm"  style="width:150px;">
+                                                <p:commandButton  value="Accept" action="#{controller.acceptTeam(team)}" update=":form3"/>
+                                                <p:commandButton  value="Reject" action="#{controller.rejectTeam(team)}"  update=":form3"/>
+                                            </p:column>
+                                        </p:dataTable>
+
+                                    </p:panel>
+                                </p:tab>
+                                <p:tab  title="Delegat" >
+                                    <p:panel header="Choose delegat" >
+                                        <p:selectOneMenu    value="#{controller.selectedDelegat}"  required="true" requiredMessage="You must choose delegat" >
+                                            <f:selectItem itemLabel="Select One" itemValue="" />
+                                            <f:selectItems value="#{controller.avaiableDelegate}"  var="delegat" itemLabel="#{delegat.firstName} #{delegat.lastName}" itemValue="#{delegat.username}"  />
+                                            <p:ajax  event="change" update=":form3" />
+                                        </p:selectOneMenu>
+
+                                        <br/>
+                                        <p:commandButton class="button" value="Add Tournament" action="#{controller.addTournament()}"  />
+
+                                    </p:panel>
+                                </p:tab>
+
+
+
+                            </center>
+                        </p:wizard >
+                    </h:form>
+                </ui:define>
+            </ui:composition> 
+        </center>
+    </h:body>
+</html>
+

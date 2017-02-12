@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <center>
+            <ui:composition template="template.xhtml">
+                <ui:define name="header">
+                    <h1>Log In</h1>  
+                </ui:define>
+                <ui:define name="content">
+
+                    <h:form >
+                        <p:stack expanded="true" icon="Images/MenuImages/menu.png"    >   
+                             <p:menuitem value="LogIn" style="width: 30px; height: 30px" icon="Images/MenuImages/login.png"  outcome="login.xhtml"/>
+                            <p:menuitem value="SignUp" style="width: 30px; height: 30px" icon="Images/MenuImages/signup.png" outcome="signup.xhtml"/>            
+                            <p:menuitem value="Medal" style="width: 30px; height: 30px" icon="Images/MenuImages/medal.png" outcome="index_medal.xhtml"/>
+                            <p:menuitem value="Search" style="width: 30px; height: 30px" icon="Images/MenuImages/login.png"  outcome="index_search.xhtml"/>
+                            <p:menuitem value="Home" style="width: 30px; height: 30px" icon="Images/MenuImages/home.png" outcome="index.xhtml"/>
+                        </p:stack>
+                    </h:form>
+                    <h:form class="small_form"  id="indexForm1"   >
+                        <h2>All nations</h2>
+                        <p:dataTable style="width:350px;" var="nation" value="#{controller.nations}" resizableColumns="true" rows="10" sortBy="#{nation.rang}"
+                                     paginator="true"  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15,20,25,30,50,100" >
+
+                            <p:column  headerText="Flag" width="50" sortBy="#{nation.flag}">
+                                <p:graphicImage id="image" value="Images/Flags/#{nation.flag}.png" height="30" width="55" cache="true"  alt="Flag: #{nation.flag}"/>
+
+                            </p:column>
+
+                            <p:column  headerText="Nation"  sortBy="#{nation.name}" width="100">
+                                <h:outputText value="#{nation.name}" />
+                            </p:column>
+
+                            <p:column  headerText="Athlets" width="60" sortBy="#{controller.appliedSpormanNation[nation.name]}">
+                                <h:outputText value="#{controller.appliedSpormanNation[nation.name]}" />
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:form>
+                </ui:define>
+            </ui:composition> 
+        </center>
+    </h:body>
+</html>
+

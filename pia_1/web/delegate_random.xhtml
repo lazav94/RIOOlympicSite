@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <center>
+            <ui:define name="header">
+                <h1>Hello delegate: <br/> #{userController.user.firstName} #{userController.user.lastName}</h1>
+            </ui:define>
+            <ui:composition template="template.xhtml">
+
+                <ui:define name="content">
+
+                    <h:form >
+                        <p:stack expanded="true" icon="Images/MenuImages/menu.png"    >
+
+                            <p:menuitem value="DateLocation" style="width: 30px; height: 30px" icon="Images/MenuImages/sch.png" outcome="delegate_dl.xhtml"/>
+                            <p:menuitem value="LogOut" style="width: 30px; height: 30px" action="#{userController.logout()}" icon="Images/MenuImages/logout.png"  outcome="login.xhtml"/>
+                            <p:menuitem value="Home" style="width: 30px; height: 30px" icon="Images/MenuImages/home.png" outcome="index.xhtml"/>
+                            <p:menuitem value="Back" style="width: 25px; height: 25px" icon="Images/MenuImages/back.png" outcome="delegate.xhtml"/>
+                        </p:stack>
+                    </h:form>
+
+
+                    <h:form class="large_form" id="formTournaments" rendered="#{not empty userController.user.tournaments}">
+
+                        <h2>Tournaments</h2>
+
+                        <p:dataTable   var="tournament" value="#{userController.user.tournaments}"  rows="10" 
+                                       paginator="true"  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                       rowsPerPageTemplate="5,10,15,20,25,30,50,100" >
+                            <f:facet name="header">
+                                <h:outputText value="All tournaments" />
+                            </f:facet>
+
+                            <p:column  headerText="id"   style="width: 15px">
+                                <h:outputText value="#{tournament.id}" />
+                            </p:column>
+
+                            <p:column  headerText="Sport"   style="width: 70px">
+                                <h:outputText value="#{tournament.sport.name}" />
+                            </p:column>
+
+                            <p:column  headerText="Discipline"  style="width: 70px">
+                                <h:outputText value="#{tournament.discipline.name}" />
+                            </p:column>
+
+
+                            <p:column  headerText="Begin Date"   style="width: 60px">
+                                <h:outputText value="#{tournament.beginDate}" />
+                            </p:column>
+
+                            <p:column  headerText="End Date"   style="width: 60px">
+                                <h:outputText value="#{tournament.endDate}" />
+                            </p:column>
+
+
+                            <p:column  headerText="Teams"  style="width: 200px">
+                                <ui:repeat   var="team" value="#{tournament.teams}">
+                                    <p:column >
+                                        <h:outputText value="#{team.sportsmen}" /> <br/>
+                                    </p:column>
+                                </ui:repeat>
+                            </p:column>
+
+                            <p:column  headerText="Teams" style="width: 90px" >
+                                <p:commandButton class="button" value="Match Teams" action="#{controller.randomAlgorithm(tournament)}" onclick="jQuery(this).addClass('ui-state-disabled')" />
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:form>
+
+
+
+                </ui:define>
+            </ui:composition> 
+        </center>
+
+    </h:body>
+</html>
+

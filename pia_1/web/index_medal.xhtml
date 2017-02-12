@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <center>
+            <ui:composition template="template.xhtml">
+                <ui:define name="header">
+                    <h1>Log In</h1>  
+                </ui:define>
+                <ui:define name="content">
+
+                    <h:form>
+                        <p:stack expanded="true" icon="Images/MenuImages/menu.png"    >      
+                            <p:menuitem value="LogIn" style="width: 30px; height: 30px" icon="Images/MenuImages/login.png"  outcome="login.xhtml"/>
+                            <p:menuitem value="SignUp" style="width: 30px; height: 30px" icon="Images/MenuImages/signup.png" outcome="signup.xhtml"/>
+                            <p:menuitem value="Sportsman" style="width: 30px; height: 30px" icon="Images/MenuImages/sportsman.png"  outcome="index_sportsman.xhtml"/>
+
+                            <p:menuitem value="Search" style="width: 30px; height: 30px" icon="Images/MenuImages/login.png"  outcome="index_search.xhtml"/>
+                            <p:menuitem value="Home" style="width: 30px; height: 30px" icon="Images/MenuImages/home.png" outcome="index.xhtml"/>
+                        </p:stack>
+                    </h:form>
+                    <h:form class="medium_form" id="indexForm2"  >
+                        <h2>Medal Counter</h2>
+                        <p:dataTable style="width:500px;" var="nation" value="#{controller.nations}" resizableColumns="true" rows="10" sortBy="#{nation.rang}"
+                                     paginator="true"  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15,20,25,30,50,100" >
+
+                            <p:column  headerText="Rang"  sortBy="#{nation.rang}" width="40">
+                                <h:outputText value="#{nation.rang}" />
+                            </p:column>
+
+                            <p:column  headerText="Flag" width="60" sortBy="#{nation.flag}">
+                                <p:graphicImage id="image" value="Images/Flags/#{nation.flag}.png" height="30" width="55" cache="true"  alt="Flag: #{nation.flag}"/>
+
+                            </p:column>
+
+                            <p:column  headerText="Nation"  sortBy="#{nation.name}">
+                                <h:outputText value="#{nation.name}" />
+                            </p:column>
+
+                            <p:column  headerText="Gold" width="20" sortBy="#{nation.gold}">
+                                <f:facet name="header">
+                                    <p:graphicImage value="Images/gold.PNG" width="25"  height="35" />
+                                </f:facet>
+                                <h:outputText value="#{nation.gold}" />
+                            </p:column>
+
+                            <p:column   width="20" sortBy="#{nation.silver}">
+                                <f:facet name="header">
+                                    <p:graphicImage value="Images/silver.PNG" width="25"  height="35" />
+                                </f:facet>
+                                <h:outputText value="#{nation.silver}" />
+                            </p:column>
+
+                            <p:column   width="20" sortBy="#{nation.bronze}">
+                                <f:facet name="header">
+                                    <p:graphicImage value="Images/bronze.PNG" width="25"  height="35"/>
+                                </f:facet>
+                                <h:outputText value="#{nation.bronze}" />
+                            </p:column>
+
+                            <p:column   width="70" sortBy="#{nation.total}">
+                                <f:facet name="header">
+                                    <p:graphicImage value="Images/all.PNG" width="75"  height="35" />
+                                </f:facet>
+                                <h:outputText value="#{nation.total}" />
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:form> 
+                </ui:define>
+            </ui:composition> 
+        </center>
+    </h:body>
+</html>
+

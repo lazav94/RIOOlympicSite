@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+
+    </h:head>
+    <h:body>
+        <center>
+            <ui:composition template="template.xhtml">
+                <ui:define name="header">
+
+                    <h1> #{userController.user.firstName}  #{userController.user.lastName} <br/> #{userController.user.nation.name} </h1>
+
+                </ui:define>
+                <ui:define name="content">
+                    <h:form >
+                        <p:stack expanded="true" icon="Images/MenuImages/menu.png"    >
+
+                            <p:menuitem value="Back" style="width: 30px; height: 30px"  icon="Images/MenuImages/back.png"  outcome="nacionalLeader.xhtml"/>
+
+                            <p:menuitem value="NewSporsman" style="width: 30px; height: 30px" icon="Images/MenuImages/sportsman.png" outcome="nl_newsportsman.xhtml"/>
+                            <p:menuitem value="TeamAplication" style="width: 30px; height: 30px" icon="Images/MenuImages/home.png" outcome="nl_teamaplication.xhtml"/>
+
+
+                            <p:menuitem value="LogOut" style="width: 30px; height: 30px" action="#{userController.logout()}" icon="Images/MenuImages/logout.png"  outcome="login.xhtml"/>
+                            <p:menuitem value="Home" style="width: 30px; height: 30px" icon="Images/MenuImages/home.png" outcome="index.xhtml"/>
+                        </p:stack>
+                    </h:form>
+                    <h:form class="medium_form" id="formSm" >
+                         <p:growl id="growlTeam" showDetail="true" life="5000" /> 
+                        <h2>Sportsman #{userController.user.nation.name}</h2>
+                        <h3>Number of sporsmen: #{userController.sizeOfNationalLeader}</h3>
+
+
+                        <p:dataTable id="sportsman" style="width:500px;" var="sportsman" value="#{controller.nationSpormsman}"   paginator="true" rows="20"
+                                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {PageLinks} {NextPageLink} {LastPageLink}"
+                                     rowsPerPageTemplate="5,10,15,20" widgetVar="smt" filteredValue="#{controller.filtredSportsman}">
+
+                            <f:facet name="header" >
+                                <p:breadCrumb >
+                                    <p:menuitem value="All"  action="#{controller.controllerBread(0)}"  update=":formSm"/>
+                                    <p:menuitem value="#{controller.selectedSport}" action="#{controller.controllerBread(1)}"  update=":formSm"/>
+                                    <p:menuitem value="#{controller.selectedDiscipline}" action="#{controller.controllerBread(2)}"  update=":formSm"/>
+
+                                </p:breadCrumb>
+                            </f:facet>
+                            <p:column headerText="Name"  style="width:35px;"  >
+                                <h:outputText value="#{sportsman.name}"  />
+                            </p:column>
+
+                            <p:column headerText="Sport"  filterBy="#{sportsman.sport.name}" filterMatchMode="exact" style="width:65px;" filterStyle="width: 40px;"  >
+                                <f:facet name="filter">
+                                    <p:selectOneMenu  value="#{controller.selectedSport}"   >
+                                        <f:selectItem itemLabel="Select Sport" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{controller.sports}" var="sp"  itemLabel="#{sp.name} [#{controller.appliedToSport[sp.name]}]" itemValue="#{sp.name}"/>
+                                        <p:ajax  event="change"  listener="#{controller.filter()}"  update=":formSm"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <h:outputText value="#{sportsman.sport.name}" />
+                            </p:column>
+
+
+                            <p:column headerText="Discipline" filterBy="#{((sportsman.disciplins.toArray())[di.name]).toString()}"   filterMatchMode="exact"  filterStyle="width: 40px;"    style="width:65px;"  >
+                                <f:facet name="filter"  >
+                                    <p:selectOneMenu   value="#{controller.selectedDiscipline}">
+                                        <f:selectItem itemLabel="Select Discipline" itemValue="" noSelectionOption="true"  />
+                                        <f:selectItems value="#{controller.disciplineFilter}" var="di" itemLabel="#{di.name}" itemValue="#{di.name}"/>
+                                        <p:ajax  event="change"  listener="#{controller.filter()}"  update=":formSm"/>  
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <ui:repeat var="dis"  value="#{sportsman.disciplins.toArray()}" >
+                                    <h:outputText id="varr" value="#{dis.name}"  /> <br/>
+                                </ui:repeat>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form> 
+                </ui:define>
+            </ui:composition>
+        </center>
+    </h:body>
+</html>
+

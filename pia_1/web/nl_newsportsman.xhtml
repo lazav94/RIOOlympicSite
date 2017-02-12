@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+
+    </h:head>
+    <h:body>
+        <center>
+            <ui:composition template="template.xhtml">
+                <ui:define name="header">
+
+                    <h1> #{userController.user.firstName}  #{userController.user.lastName} <br/> #{userController.user.nation.name} </h1>
+
+                </ui:define>
+                <ui:define name="content">
+                    <h:form >
+                        <p:stack expanded="true" icon="Images/MenuImages/menu.png"    >
+                            <p:menuitem value="Back" style="width: 30px; height: 30px"  icon="Images/MenuImages/back.png"  outcome="nacionalLeader.xhtml"/>
+                            <p:menuitem value="TeamAplication" style="width: 30px; height: 30px" icon="Images/MenuImages/home.png" outcome="nl_teamaplication.xhtml"/>
+                            <p:menuitem value="SportmanSearch" style="width: 30px; height: 30px" icon="Images/MenuImages/sch.png" outcome="nl_searchsportman.xhtml"/>
+                            <p:menuitem value="LogOut" style="width: 30px; height: 30px" action="#{userController.logout()}" icon="Images/MenuImages/logout.png"  outcome="login.xhtml"/>
+                            <p:menuitem value="Home" style="width: 30px; height: 30px" icon="Images/MenuImages/home.png" outcome="index.xhtml"/>
+                        </p:stack>
+                    </h:form>
+
+                    <h:form class="small_form" id="formSportsman" >
+                        <p:growl id="growlTeam" showDetail="true" life="5000" /> 
+                        <h2>New Sportsman</h2>
+                        <p:wizard backLabel="back" style="width:400px;" >
+                            <p:tab title="Sportsman">
+                                <p:panel header="New Sporsman" >
+                                    <p:inputText placeholder="Sportsman name" value="#{controller.newSportsman}" required="true" requiredMessage="Sportsman name is empty"/>
+                                    <br/>
+                                    <p:selectOneRadio  value="#{controller.sex}" required="true" requiredMessage="Choose sex">
+                                        <f:selectItem itemLabel="Man" itemValue="man" />
+                                        <f:selectItem itemLabel="Woman" itemValue="woman" />
+                                    </p:selectOneRadio>
+                                </p:panel>
+                            </p:tab>
+
+                            <p:tab title="Sport"  >
+                                <p:panel header="Select sport">
+                                    <p:selectOneMenu id="sp" value="#{controller.selectedSport}" style="width:200px" required="true" requiredMessage="You must choose sport">
+                                        <f:selectItem itemLabel="Select One" itemValue="" />
+                                        <f:selectItems value="#{controller.sports}"  var="s" itemLabel="#{s.name}"  itemValue="#{s.name}" />
+                                        <p:ajax  event="change" update="disc" listener="#{controller.selectSportTournament()}" />
+                                    </p:selectOneMenu>
+                                </p:panel>
+                            </p:tab>
+
+                            <p:tab  title="Discipline" >
+                                <p:panel header="Chose discipline">
+                                    <p:selectOneMenu  id="disc" value="#{controller.selectedDiscipline}" style="width:125px" rendered="#{not empty controller.disciplins}" required="true" requiredMessage="You must choose discipline" >
+                                        <f:selectItem itemLabel="Select One" itemValue="" />
+                                        <f:selectItems value="#{controller.disciplins}"  var="disciplin" itemLabel="#{disciplin.name}" itemValue="#{disciplin.name}"  />
+                                    </p:selectOneMenu>
+                                    <br/><br/>
+                                    Has medal? &nbsp; <p:selectBooleanButton   offLabel="No" onLabel="Yes" offIcon="ui-icon-close"   onIcon="ui-icon-check" value="#{controller.medal}"   />
+                                    <br/><br/>
+                                    <p:commandButton class="button" value="Add Sportsman" action="#{controller.addSportsman()}"  actionListener="#{controller.saveMessage()}" update=":formSportsman" icon="fa-arrow-circle-right"/>
+                                </p:panel>
+                            </p:tab>
+                        </p:wizard >
+                    </h:form>
+
+                </ui:define>
+            </ui:composition>
+        </center>
+    </h:body>
+</html>
+

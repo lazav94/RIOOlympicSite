@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <center>
+            <ui:composition template="template.xhtml">
+                <ui:define name="header">
+                    <h1> Hello #{userController.user.firstName} #{userController.user.lastName} </h1>
+
+                </ui:define>
+                <ui:define name="content">
+
+                    <h:form >
+                        <p:stack expanded="true" icon="Images/MenuImages/menu.png"    >
+                            <p:menuitem value="UserRequest" style="width: 30px; height: 30px" icon="Images/MenuImages/user.jpg" outcome="o_userrequest.xhtml"/>
+                           
+                            <p:menuitem value="NewDiscipline" style="width: 30px; height: 30px" icon="Images/MenuImages/di.png" outcome="o_adddiscipline.xhtml"/>
+                            <p:menuitem value="NewTournament" style="width: 30px; height: 30px" icon="Images/MenuImages/troph.png" outcome="o_addtournament.xhtml"/>
+                            <p:menuitem value="Records" style="width: 30px; height: 30px" icon="Images/MenuImages/stopwatch.png" outcome="o_records.xhtml"/>
+
+                            <p:menuitem value="LogOut" style="width: 30px; height: 30px" action="#{userController.logout()}" icon="Images/MenuImages/logout.png"  outcome="login.xhtml"/>
+                           <p:menuitem value="Back" style="width: 30px; height: 30px" icon="Images/MenuImages/back.png" outcome="organizer.xhtml"/>
+                        </p:stack>
+                    </h:form>
+
+                    <h:form class="small_form" id="form1">   
+                        <h2>Add Sport to Olympic</h2>
+                        <p:panelGrid columns="1">
+                            <p:growl id="growl1" showDetail="true" life="5000"/>
+                            <p:inputText placeholder="New Sport" value="#{controller.newSport}" required="true" requiredMessage="New Sport is empty"/>      
+                            <br/>
+                            <h:outputText id="displayRange" value="Between #{controller.min} and #{controller.max}" style="color: #ffffff" />
+                            <p:slider for="txt1,txt2" minValue="0" maxValue="20" display="displayRange" style="width: 300px;" range="true" displayTemplate="Between {min} and {max}" />
+                            <h:outputText  value="For sports with discipline choose min and max (0,0)" />
+
+                            <h:inputHidden id="txt1" value="#{controller.min}" />
+                            <h:inputHidden id="txt2" value="#{controller.max}" />
+                            <br/>
+                            <p:commandButton class="button" value="Add Sport" action="#{controller.addSport()}"  actionListener="#{controller.saveMessage()}" update=":form1" />
+                        </p:panelGrid> 
+                    </h:form >
+                </ui:define>
+            </ui:composition> 
+        </center>
+    </h:body>
+</html>
+

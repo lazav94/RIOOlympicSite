@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Sign Up</title>
+
+    </h:head>
+    <h:body>
+        <center>
+            <ui:composition template="template.xhtml">
+                <ui:define name="header">
+                    <h1>Sign Up</h1>  
+                </ui:define>
+                <ui:define name="content">
+
+                    <h:form >
+                        <p:stack expanded="true" icon="Images/MenuImages/menu.png"    >     
+                            <p:menuitem value="LogIn" style="width: 30px; height: 30px" icon="Images/MenuImages/login.png"  outcome="login.xhtml"/>
+                            <p:menuitem value="Sportsman" style="width: 30px; height: 30px" icon="Images/MenuImages/sportsman.png"  outcome="index_sportsman.xhtml"/>
+                            <p:menuitem value="Medal" style="width: 30px; height: 30px" icon="Images/MenuImages/medal.png" outcome="index_medal.xhtml"/>
+                            <p:menuitem value="Search" style="width: 30px; height: 30px" icon="Images/MenuImages/login.png"  outcome="index_search.xhtml"/>
+                            <p:menuitem value="Home" style="width: 30px; height: 30px" icon="Images/MenuImages/home.png" outcome="index.xhtml"/>
+                        </p:stack>
+                    </h:form>
+                    <h:form class="small_form">
+                        <p:panelGrid columns="1">
+                            <p:growl id="growl" showDetail="true" life="3000"/>
+
+                            <p:inputText class="intext" placeholder="Useraname" value="#{userController.usernameSignUp}" required="true" requiredMessage="Username must be filled" validatorMessage="Username must have 2-20 characters" >
+                                <f:validateLength minimum="2" maximum="20"  />
+                            </p:inputText>
+
+                            <p:password class="intext" value="#{userController.passwordSignUp}" placeholder="Password" required="true"   requiredMessage="Password must be filled"  validatorMessage="Password must have 8-12  characters" feedback="true">
+                                <f:validateLength minimum="8" maximum="12"  />
+                            </p:password> 
+                            
+                            <p:password class="intext" value="#{userController.passwordConfirm}" placeholder="confirm Password" required="true"   requiredMessage="Password must be filled"  validatorMessage="Password must have 8-12  characters" feedback="true">
+                                <f:validateLength minimum="8" maximum="12"  />
+                            </p:password>
+
+
+                            <p:inputText class="intext" placeholder="First name" value="#{userController.firstName}" required="true"  requiredMessage="First name is empty" />
+
+                            <p:inputText class="intext" placeholder="Last name" value="#{userController.lastName}" required="true" requiredMessage="Last name is empty"/>
+
+                            <p:selectOneMenu required="true" requiredMessage="You must choose nation" value="#{userController.nation}" style="width: 190px" >
+                                <f:selectItem itemLabel="Select nation" itemValue="" />
+                                <f:selectItems value="#{controller.nations}" var="n" itemLabel="#{n.name}"  itemValue="#{n.name}" />
+                            </p:selectOneMenu>
+
+                            <p:inputText class="intext" placeholder="Email" value="#{userController.email}" required="true" requiredMessage="Email name is empty"  />
+
+                            <p:panelGrid columns="1">
+                                <p:selectOneRadio  value="#{userController.type}" required="true" requiredMessage="You must choose type" style="color: #ffffff; margin-left: -3px; "  layout="grid" columns="1"  >
+                                    <f:selectItem  class="intext" itemLabel="Delegat" itemValue="1"  />
+                                    <f:selectItem class="intext" itemLabel="National delegat" itemValue="2"/>
+                                </p:selectOneRadio>
+                            </p:panelGrid>
+                            <p:commandButton class="button" value="Sign Up" action="#{userController.signUp()}"  update="growl"/>
+
+                        </p:panelGrid>
+                    </h:form>
+
+                </ui:define>
+            </ui:composition> 
+        </center>
+    </h:body>
+</html>
+

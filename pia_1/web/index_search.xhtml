@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <center>
+            <ui:composition template="template.xhtml">
+                <ui:define name="header">
+                    <h1>Log In</h1>  
+                </ui:define>
+                <ui:define name="content">
+
+                    <h:form >
+                        <p:stack expanded="true" icon="Images/MenuImages/menu.png"    >    
+                             <p:menuitem value="LogIn" style="width: 30px; height: 30px" icon="Images/MenuImages/login.png"  outcome="login.xhtml"/>
+                            <p:menuitem value="SignUp" style="width: 30px; height: 30px" icon="Images/MenuImages/signup.png" outcome="signup.xhtml"/>
+                            <p:menuitem value="Sportsman" style="width: 30px; height: 30px" icon="Images/MenuImages/sportsman.png"  outcome="index_sportsman.xhtml"/>
+                            <p:menuitem value="Medal" style="width: 30px; height: 30px" icon="Images/MenuImages/medal.png" outcome="index_medal.xhtml"/>
+                           
+                            <p:menuitem value="Home" style="width: 30px; height: 30px" icon="Images/MenuImages/home.png" outcome="index.xhtml"/>
+                        </p:stack>
+                    </h:form>
+                    <h:form class="form" id="indexForm3"  >
+                        <h2>Search</h2>
+                        <p:dataTable id="indexTable" style="width:920px;" var="s" value="#{controller.sportsmen}" filteredValue="#{controller.filtredSportsman}" emptyMessage="No sporsman found with given criteria" paginator="true" rows="10"
+                                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {PageLinks} {NextPageLink} {LastPageLink}"
+                                     rowsPerPageTemplate="5,10,15,20"   widgetVar="sportsmanTable" resizableColumns="true"  >
+
+
+                            <p:column headerText="Name" sortBy="#{s.name}" filterBy="#{s.name}" filterMatchMode="contains" style="width:100px;" filterStyle="width: 70px;">
+                                <h:outputText value="#{s.name}" />
+                            </p:column>
+
+
+                            <p:column headerText="Nation"  filterBy="#{s.nation.name}" filterMatchMode="exact" >
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('sportsmanTable').filter()" >
+                                        <f:selectItem itemLabel="Select Nation" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{controller.nations}" var="sp" itemLabel="#{sp.name}" itemValue="#{sp.name}" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <h:outputText value="#{s.nation.name}" />
+                            </p:column>
+
+                            <p:column headerText="Sport"  filterBy="#{s.sport.name}" filterMatchMode="exact" style="width:95px;" filterStyle="width: 60px;"  >
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('sportsmanTable').filter()" value="#{controller.selectedSport}"   >
+                                        <f:selectItem itemLabel="Select Sport" itemValue="" noSelectionOption="true"  />
+                                        <f:selectItems value="#{controller.sports}" var="sp"   itemLabel="#{sp.name}" itemValue="#{sp.name}"/>
+                                        <p:ajax  event="change"  update=":indexForm3" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <h:outputText value="#{s.sport.name}" />
+                            </p:column>
+
+
+                            <p:column headerText="Discipline" filterBy="#{((s.disciplins.toArray())[di.name]).toString()}"   filterMatchMode="exact"  filterStyle="width: 75px;"    style="width:140px;"  >
+                                <f:facet name="filter"  >
+                                    <p:selectOneMenu  value="#{controller.selectedDiscipline}">
+                                        <f:selectItem   itemLabel="Select Discipline" itemValue="" noSelectionOption="true"  />
+                                        <f:selectItems value="#{controller.disciplins}" var="di" itemLabel="#{di.name}" itemValue="#{di.name}"/>
+                                        <p:ajax  event="change"  listener="#{controller.filterIndex()}"  update=":indexForm3" />  
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <ui:repeat var="dis"  value="#{s.disciplins.toArray()}" >
+                                    <h:outputText id="varr" value="#{dis.name}"  /> <br/>
+                                </ui:repeat>
+                            </p:column>
+
+
+
+                            <p:column filterBy="#{s.sex}" headerText="Sex"  filterMatchMode="equals" style="width:220px;"  filterStyleClass="width:110px;" >
+                                <f:facet name="filter">
+                                    <p:selectOneButton onchange="PF('sportsmanTable').filter()">
+
+                                        <f:selectItem itemLabel="Both" itemValue=""  />
+                                        <f:selectItem itemLabel="Man" itemValue="man" />
+                                        <f:selectItem itemLabel="Woman" itemValue="woman" />
+                                    </p:selectOneButton>
+                                </f:facet>
+                                <h:outputText value="#{s.sex}" />
+
+                            </p:column>
+
+
+                            <p:column  headerText="Hava a medal?"  filterBy="#{s.medal}" filterMatchMode="exact" style="width:70px;" filterStyleClass="width:60px;">
+                                <f:facet name="filter">
+
+                                    <p:selectBooleanButton   onchange="PF('sportsmanTable').filter()" onLabel="Yes" offLabel="No"  onIcon="ui-icon-check"  offIcon="ui-icon-close"   />
+
+                                </f:facet>
+                                <h:outputText value="#{s.medal}" />
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:form>
+                </ui:define>
+            </ui:composition> 
+        </center>
+    </h:body>
+</html>
+

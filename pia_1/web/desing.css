@@ -1,0 +1,244 @@
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300);
+
+html{
+    overflow-y: scroll;
+}
+
+body{
+    background-image: url("Images/rio/olympics-rio-2016.png");
+    background: #179b77;
+    font-family: 'Source Sans Pro', 'Titillium Web', sans-serif;
+}
+
+.large_form{
+    font-family:  'Source Sans Pro','Titillium Web', sans-serif;
+    background: rgba(19, 35, 47, 0.9);
+    padding: 40px;
+    max-width: 1000px;
+    margin: 40px auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+.form {
+    font-family:  'Source Sans Pro','Titillium Web', sans-serif;
+    background: rgba(19, 35, 47, 0.9);
+    padding: 40px;
+    max-width: 900px;
+    margin: 40px auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+
+.small_form {
+    font-family:  'Source Sans Pro','Titillium Web', sans-serif;
+    background: rgba(19, 35, 47, 0.9);
+    padding: 40px;
+    max-width: 500px;
+    margin: 40px auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+
+.medium_form {
+    font-family:  'Source Sans Pro','Titillium Web', sans-serif;
+    background: rgba(19, 35, 47, 0.9);
+    padding: 40px;
+    max-width: 600px;
+    margin: 40px auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+.ls_form {
+    font-family:  'Source Sans Pro','Titillium Web', sans-serif;
+    background: rgba(19, 35, 47, 0.9);
+    padding: 40px;
+    max-width: 300px;
+    margin: 40px auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+
+.button_form{
+    font-family:  'Source Sans Pro','Titillium Web', sans-serif;
+    background: rgba(19, 35, 47, 0.9);
+    padding: 40px;
+    max-width: 200px;
+    margin: 40px auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+
+
+
+.intext{
+    font-size : 15px !important;
+    color: #ffffff !important;
+    width: 180px;
+    height: 20px;
+    background:  #179b77  !important;
+}
+.intext:hover{ 
+    width: 200px;
+}
+.intext:focus{
+    width: 210px;
+
+
+}
+
+
+.ui-button-text-only .ui-button-text {
+    font-size: 12px;
+    padding: .1em .5em;
+}
+
+
+.ui-panelgrid td {
+    padding: 40px;
+    max-width: 800px;
+
+    margin: 40px auto;
+    text-align: center;
+}
+
+.ui-panelgrid td, .ui-panelgrid tr
+{
+    background: rgba(19, 35, 47, 0.9);
+    background:transparent   !important;
+    border-style: none !important
+}
+
+
+
+
+
+
+.ui-tabs-nav{
+
+    left: auto !important;
+    border-bottom-color: green;
+    font-family:  'Source Sans Pro','Titillium Web', sans-serif;
+    background: transparent !important;
+    text-align: center;
+    font-size: 25px;
+}
+
+.ui-state-active{
+
+
+    font-family:  'Source Sans Pro','Titillium Web', sans-serif;
+    background:  #A6D3FF !important;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    -webkit-appearance: none;
+}
+.ui-state-default{
+    font-family:  'Source Sans Pro','Titillium Web', sans-serif;
+
+}
+
+.ui-widget {
+    font-size: 13px;
+    text-align: center;
+
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+    font-weight: 300;
+    margin: 0 0 40px;
+}
+h2{
+    text-align: center;
+    color: #ffffff;
+    font-weight: 300;
+    margin: 0 0 40px;
+}
+h3{
+    text-align: center;
+    color: #ffffff;
+    font-weight: 300;
+    margin: 0 0 40px;
+}
+
+
+.button:hover{
+    background: #1ab155;
+}
+
+.ui-button{
+    width:70px;
+    height:30px;
+}
+
+.ui-button-text-only.button .ui-button-text.button{
+    font-family:  'Source Sans Pro','Titillium Web', sans-serif;
+    font-size : 15px;
+    border: 0;
+    height: 33px;
+    width: 150px;
+    outline: none;
+    border-radius: 5px;
+    background: #1ab188;
+    color: #ffffff;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    -webkit-appearance: none;
+}
+
+.button{
+    font-family:  'Source Sans Pro','Titillium Web', sans-serif;
+    border: 0;
+    height: 33px;
+    width: 150px;
+    font-size : 15px;
+    outline: none;
+    border-radius: 5px;
+    background: #1ab188;
+    color: #ffffff;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    -webkit-appearance: none;
+}
+
+.ui-selectonemenu .ui-selectonemenu-label {
+    width: 100px;
+}
+
+
+
+
+body ::-webkit-input-placeholder {
+    /* WebKit browsers */
+    font-family:  'Source Sans Pro','Titillium Web', sans-serif;
+    color: #000200;
+    font-weight: 300;
+    font-size: 14px;
+
+
+}
+body :-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    font-family:  'Source Sans Pro','Titillium Web', sans-serif;
+    color: black;
+    opacity: 1;
+    font-weight: 300;
+
+}
+body ::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    font-family:  'Source Sans Pro','Titillium Web', sans-serif;
+    color: black;
+    opacity: 1;
+    font-weight: 300;
+}
+body :-ms-input-placeholder {
+    /* Internet Explorer 10+ */
+    font-family:  'Source Sans Pro','Titillium Web', sans-serif;
+    color: black;
+    font-weight: 300;
+}
+
+
+

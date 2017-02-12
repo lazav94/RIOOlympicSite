@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <title>Log In</title>
+       
+
+    </h:head>
+    <h:body> 
+        <center>
+        <ui:composition template="template.xhtml">
+            <ui:define name="header">
+                <h1>Log In</h1>  
+            </ui:define>
+            <ui:define name="content">
+              
+                 <h:form >
+                        <p:stack expanded="true" icon="Images/MenuImages/menu.png"    >             
+                            <p:menuitem value="SignUp" style="width: 30px; height: 30px" icon="Images/MenuImages/signup.png" outcome="signup.xhtml"/>
+                            <p:menuitem value="Sportsman" style="width: 30px; height: 30px" icon="Images/MenuImages/sportsman.png"  outcome="index_sportsman.xhtml"/>
+                            <p:menuitem value="Medal" style="width: 30px; height: 30px" icon="Images/MenuImages/medal.png" outcome="index_medal.xhtml"/>
+                            <p:menuitem value="Search" style="width: 30px; height: 30px" icon="Images/MenuImages/search.png"  outcome="index_search.xhtml"/>
+                            <p:menuitem value="Home" style="width: 30px; height: 30px" icon="Images/MenuImages/home.png" outcome="index.xhtml"/>
+                        </p:stack>
+                    </h:form>
+
+                    <h:form class="ls_form" >
+                        <p:growl id="growl" showDetail="true" life="3000"/>
+
+                        <p:panelGrid columns="1">
+                            <p:inputText class="intext" placeholder="Useraname"  value="#{userController.usernameLogIn}" required="true" requiredMessage="Username must be filled" validatorMessage="Username must have 2 or more character" >
+                                <f:validateLength minimum="2"/>
+                            </p:inputText>
+
+                            <p:password class="intext" value="#{userController.passwordLogIn}" placeholder="Password" required="true"   requiredMessage="Password must be filled"  validatorMessage="Password must have 6-12  character" feedback="true">
+                                <f:validateLength minimum="8" maximum="12"  />
+                            </p:password> 
+
+                            <p:link value="Change password" outcome="ChangingPassword.xhtml" style="color: #ffffff"/>
+
+                            <p:commandButton class="button" value="Log In" action="#{userController.logIn()}"  update="growl" />
+
+
+                        </p:panelGrid>
+                    </h:form>
+                    <br/>
+
+              
+            </ui:define>
+        </ui:composition> 
+        </center>
+    </h:body>
+</html>
+
